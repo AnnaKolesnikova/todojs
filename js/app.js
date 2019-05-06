@@ -1,10 +1,6 @@
 function createElement(tag, props, ...children) {
     const element = document.createElement(tag);
 
-    // for(let prop in props) {
-    //     element[prop] = props[prop]; //element.className = props.className;
-    // }
-
     Object.keys(props).forEach(key => element[key] = props[key]);
 
     if (children.length > 0) {
@@ -23,11 +19,11 @@ function createElement(tag, props, ...children) {
 function createTodoItem(title) {
     const checkbox = createElement('input', { type: 'checkbox', className: 'checkbox' });
     const label = createElement('label', { className: 'title' }, title);
-    const editInput = createElement('input', { type: 'text', className: 'textField' });
+    const editInput = createElement('input', { type: 'text', className: 'textfield' });
     const editButton = createElement('button', { className: 'edit' }, 'Изменить');
     const deleteButton = createElement('button', { className: 'delete' }, 'Удалить');
     const listItem = createElement('li', { className: 'todo-item' }, checkbox, label, editInput, editButton, deleteButton);
-    
+
     bindEvents(listItem);
 
     return listItem;
@@ -35,8 +31,8 @@ function createTodoItem(title) {
 
 function bindEvents(todoItem) {
     const checkbox = todoItem.querySelector('.checkbox');
-    const editButton =  todoItem.querySelector('button.edit');
-    const deleteButton =  todoItem.querySelector('button.delete');
+    const editButton = todoItem.querySelector('button.edit');
+    const deleteButton = todoItem.querySelector('button.delete');
 
     checkbox.addEventListener('change', toggleTodoItem);
     editButton.addEventListener('click', editTodoItem);
@@ -47,12 +43,12 @@ function addTodoItem(event) {
     event.preventDefault();
 
     if (addInput.value === '') {
-        return alert('Необходимо ввести название задачи');
+        return alert('Необходимо ввести название задачи.');
     }
 
     const todoItem = createTodoItem(addInput.value);
     todoList.appendChild(todoItem);
-    addInput.value = '123';
+    addInput.value = '';
 }
 
 function toggleTodoItem() {
@@ -64,7 +60,7 @@ function editTodoItem() {
     const listItem = this.parentNode;
     const title = listItem.querySelector('.title');
     const editInput = listItem.querySelector('.textfield');
-    const isEditing =listItem.classList.contains('editing');
+    const isEditing = listItem.classList.contains('editing');
 
     if (isEditing) {
         title.innerText = editInput.value;
@@ -91,7 +87,5 @@ function main() {
     todoForm.addEventListener('submit', addTodoItem);
     todoItems.forEach(item => bindEvents(item));
 }
-
-// todoForm.addEventListener('submit', addTodoItem);
 
 main();
